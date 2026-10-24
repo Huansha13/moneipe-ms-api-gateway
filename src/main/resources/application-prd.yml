@@ -1,0 +1,19 @@
+# ============================================================
+# Perfil PRD — producción
+# Activación: SPRING_PROFILES_ACTIVE=prd
+#
+# REGLA: este archivo NO contiene secretos.
+# Credenciales y valores sensibles llegan SOLO como variables
+# de entorno (p.ej. KEYCLOAK_ISSUER_URI, CORS_ALLOWED_ORIGINS,
+# MS_*_URI) desde .env o de las variables del servidor.
+# ============================================================
+app:
+  cors:
+    # Obligatorio en prd: sin esta variable el gateway no arranca
+    allowed-origins: ${CORS_ALLOWED_ORIGINS}
+
+logging:
+  level:
+    root: WARN
+    win.huansha.moneipe: INFO
+    org.springframework.cloud.gateway: WARN

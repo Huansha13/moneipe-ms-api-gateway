@@ -1,0 +1,13 @@
+# ============================================================
+# Perfil DEV — máquina de desarrollo (perfil por defecto)
+# ============================================================
+app:
+  cors:
+    allowed-origins: http://localhost:4200
+
+logging:
+  level:
+    root: INFO
+    win.huansha.moneipe: DEBUG
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.web: DEBUG

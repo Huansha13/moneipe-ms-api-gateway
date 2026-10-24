@@ -1,0 +1,13 @@
+# ============================================================
+# Perfil QA — entorno de pruebas (servidor casero)
+# Activación: SPRING_PROFILES_ACTIVE=qa
+# ============================================================
+app:
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:4200}
+
+logging:
+  level:
+    root: INFO
+    win.huansha.moneipe: INFO
+    org.springframework.cloud.gateway: INFO

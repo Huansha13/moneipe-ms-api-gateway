@@ -4,7 +4,6 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          # KEYCLOAK_ISSUER_URI obligatorio (dominio/realm de qa)
           issuer-uri: ${KEYCLOAK_ISSUER_URI}
 
 app:

@@ -4,7 +4,6 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          # Keycloak nuevo en K3s (repo Huansha13/moneipe-infra), realm por ambiente
           issuer-uri: ${KEYCLOAK_ISSUER_URI}
 
 app:

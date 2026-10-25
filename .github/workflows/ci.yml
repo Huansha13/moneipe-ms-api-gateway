@@ -12,33 +12,8 @@ jobs:
     permissions:
       contents: read
       packages: write
-    services:
-      postgres:
-        image: postgres:16-alpine
-        env:
-          POSTGRES_USER: moneipe
-          POSTGRES_PASSWORD: moneipe
-          POSTGRES_DB: moneipe_gastos
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U moneipe -d moneipe_gastos"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
     env:
-      SPRING_PROFILES_ACTIVE: dev
-      KEYCLOAK_ISSUER_URI: https://auth-moneipe-k3-dev.huansha.win/realms/moneipe-dev
-      CORS_ALLOWED_ORIGINS: http://localhost:4200
-      MS_CONTROL_GASTOS_URI: http://localhost:8081
-      MS_INVERSIONES_URI: http://localhost:8082
-      MS_NOTIFICACIONES_URI: http://localhost:8083
-      MS_USUARIOS_URI: http://localhost:8084
-      DB_HOST: localhost
-      DB_PORT: 5432
-      DB_NAME: moneipe_gastos
-      DB_USER: moneipe
-      DB_PASSWORD: moneipe
+      SPRING_PROFILES_ACTIVE: test
     steps:
       - uses: actions/checkout@v4
 

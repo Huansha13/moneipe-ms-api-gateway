@@ -1,0 +1,14 @@
+# application-test.yml — solo para CI/tests
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://auth-moneipe-k3-dev.huansha.win/realms/moneipe-dev
+app:
+  cors:
+    allowed-origins: http://localhost:4200
+MS_CONTROL_GASTOS_URI: http://localhost:8081
+MS_INVERSIONES_URI: http://localhost:8082
+MS_NOTIFICACIONES_URI: http://localhost:8083
+MS_USUARIOS_URI: http://localhost:8084

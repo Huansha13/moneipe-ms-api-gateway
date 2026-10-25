@@ -9,13 +9,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
-/**
- * CORS global: definido una sola vez aquí (no en cada microservicio).
- *
- * <p>Los orígenes permitidos vienen de la propiedad {@code app.cors.allowed-origins},
- * que se define por perfil (dev/qa/prd) en {@code application-{perfil}.yml}.
- * Lo consume {@link SecurityConfig} vía {@code http.cors(...)}.
- */
 @Configuration
 public class CorsConfig {
 
@@ -28,7 +21,7 @@ public class CorsConfig {
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "X-Requested-With"));
         config.setAllowCredentials(true);
-        config.setMaxAge(3600L); // cachea el preflight 1h
+        config.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);

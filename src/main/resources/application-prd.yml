@@ -1,15 +1,14 @@
-# ============================================================
-# Perfil PRD — producción
-# Activación: SPRING_PROFILES_ACTIVE=prd
-#
-# REGLA: este archivo NO contiene secretos.
-# Credenciales y valores sensibles llegan SOLO como variables
-# de entorno (p.ej. KEYCLOAK_ISSUER_URI, CORS_ALLOWED_ORIGINS,
-# MS_*_URI) desde .env o de las variables del servidor.
-# ============================================================
+# Perfil PRD — SPRING_PROFILES_ACTIVE=prd. Sin secretos: todo por variables de entorno.
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # KEYCLOAK_ISSUER_URI obligatorio (dominio/realm de prd)
+          issuer-uri: ${KEYCLOAK_ISSUER_URI}
+
 app:
   cors:
-    # Obligatorio en prd: sin esta variable el gateway no arranca
     allowed-origins: ${CORS_ALLOWED_ORIGINS}
 
 logging:

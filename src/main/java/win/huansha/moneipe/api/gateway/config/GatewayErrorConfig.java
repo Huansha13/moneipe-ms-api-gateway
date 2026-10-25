@@ -22,12 +22,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
- * Manejo de errores del gateway (reemplaza al handler por defecto de Boot).
- *
- * <p>Objetivo: que el front pueda distinguir los fallos.
- * Cuando un microservicio interno no responde, el error del navegador debe ser
- * {@code 503 Service Unavailable} (no {@code 500}), para que el cliente sepa que
- * el problema es el servicio de destino y no el gateway ni su petición.
+ * Handler propio de errores: 503 destino caído · 504 timeout · 500 interno.
  */
 @Slf4j
 @Configuration
@@ -41,7 +36,7 @@ public class GatewayErrorConfig {
     ErrorWebExceptionHandler gatewayExceptionHandler() {
         return (exchange, ex) -> {
             if (exchange.getResponse().isCommitted()) {
-                return Mono.error(ex); // ya se respondió: dejar que lo maneje el servidor
+                return Mono.error(ex);
             }
 
             HttpStatus status = resolveStatus(ex);
@@ -56,7 +51,6 @@ public class GatewayErrorConfig {
         };
     }
 
-    /** 503: destino caído/inaccesible · 504: timeout · 500: cualquier otro caso. */
     private HttpStatus resolveStatus(Throwable ex) {
         for (Throwable cause = ex; cause != null; cause = cause.getCause() == cause ? null : cause.getCause()) {
             if (cause instanceof ConnectException || cause instanceof UnknownHostException) {
@@ -77,7 +71,6 @@ public class GatewayErrorConfig {
             log.error("Error no manejado en {} {}",
                     exchange.getRequest().getMethod(), exchange.getRequest().getPath().value(), ex);
         } else {
-            // Caída de un MS es esperado en desarrollo: WARN, sin stacktrace
             log.warn("{} {} → {} ({}: {})",
                     exchange.getRequest().getMethod(), exchange.getRequest().getPath().value(),
                     status.value(), ex.getClass().getSimpleName(), rootMessage(ex));

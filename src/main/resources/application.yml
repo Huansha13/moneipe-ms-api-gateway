@@ -1,37 +1,29 @@
-# ============================================================
-# Configuración COMÚN a todos los perfiles
-# (lo que cambia por entorno vive en application-{dev,qa,prd}.yml)
-# ============================================================
 spring:
   application:
     name: api-gateway
   profiles:
     default: dev
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          # Mismo issuer en dev/qa/prd: Keycloak (sobre-escribible con KEYCLOAK_ISSUER_URI)
-          issuer-uri: ${KEYCLOAK_ISSUER_URI:https://moneipe-keycloak.huansha.win/realms/moneipe}
   cloud:
     gateway:
       server:
         webflux:
-          # Rutas: lo que pide el front -> microservicio interno (solo en la red interna).
-          # Las URIs se sobreescriben por entorno con MS_*_URI (docker/servidor).
           routes:
             - id: control-gastos
-              uri: ${MS_CONTROL_GASTOS_URI:http://localhost:8081}
+              uri: ${MS_CONTROL_GASTOS_URI}
               predicates:
                 - Path=/api/gastos/**
             - id: inversiones
-              uri: ${MS_INVERSIONES_URI:http://localhost:8082}
+              uri: ${MS_INVERSIONES_URI}
               predicates:
                 - Path=/api/inversiones/**
             - id: notificaciones
-              uri: ${MS_NOTIFICACIONES_URI:http://localhost:8083}
+              uri: ${MS_NOTIFICACIONES_URI}
               predicates:
                 - Path=/api/notificaciones/**
+            - id: usuarios
+              uri: ${MS_USUARIOS_URI}
+              predicates:
+                - Path=/api/usuarios/**
 
 server:
   port: 8080

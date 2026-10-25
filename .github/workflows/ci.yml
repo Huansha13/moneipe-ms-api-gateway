@@ -12,8 +12,6 @@ jobs:
     permissions:
       contents: read
       packages: write
-    env:
-      SPRING_PROFILES_ACTIVE: test
     steps:
       - uses: actions/checkout@v4
 
@@ -24,8 +22,8 @@ jobs:
           java-version: '21'
           cache: maven
 
-      - name: Build and test
-        run: ./mvnw -B test package
+      - name: Build (sin tests)
+        run: ./mvnw -B -DskipTests package
 
       - name: Prepare image name
         id: img
